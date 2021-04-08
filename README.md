@@ -1,6 +1,6 @@
 # Tictactoe
 
-This project is web Tictactoe game
+This project is react app Tictactoe game
 
 ## Framework/Libraries
 
