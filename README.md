@@ -1,12 +1,12 @@
-# TicTacTo
+# Tictactoe
 
-This project is web tictactoe
+This project is web Tictactoe game
 
 ## Framework/Libraries
 
-1. React
-2. p5
-3. Bootstrap
+- React
+- p5
+- Bootstrap
 
 ## Deployment
 
