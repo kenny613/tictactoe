@@ -57,7 +57,12 @@ export default class P5 extends Component {
   };
 
   mouseClicked = (p5) => {
+    if(p5.mouseX>400||p5.mouseY>400 ||p5.mouseX<0||p5.mouseY<0){
+      return false;
+    }
+   
     let x = Math.floor(p5.mouseX / this.state.w);
+    console.log(p5.mouseX+" "+p5.mouseY)
     let y = Math.floor(p5.mouseY / this.state.h);
     if (this.state.board[x][y] === "") {
       p5.textSize(this.state.w);
