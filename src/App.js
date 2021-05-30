@@ -12,8 +12,10 @@ function App() {
       <div>
         <Navbar />
         <div id="container" class="ml-auto mr-auto mt-5">
-          <Route path="/player" component={Player} />
-          <Route path="/AI" component={AI} />
+          <Switch>
+            <Route path="/" exact component={Player} />
+            <Route path="/AI" exact component={AI} />
+          </Switch>
         </div>
       </div>
     </Router>
