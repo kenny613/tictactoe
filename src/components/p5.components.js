@@ -42,7 +42,7 @@ export default class P5 extends Component {
     p5.line(0, p5.height - 1, p5.width, p5.height - 1);
   };
 
-  updateCount = () => {
+  updateCount = (p5) => {
     this.setState((state) => ({
       finish: true,
       count: state.count,
@@ -67,22 +67,19 @@ export default class P5 extends Component {
       p5.textSize(this.state.w);
       let a;
       let b = y * this.state.h + this.state.h - this.state.h / 8;
+      let board = this.state.board;
 
       if (this.state.count % 2 === 0) {
         a = x * this.state.w + this.state.w / 8;
-        let board = this.state.board;
         board[x][y] = "O";
-        this.setState(() => ({
-          board: board,
-        }));
       } else {
         a = x * this.state.w + this.state.w / 6;
-        let board = this.state.board;
         board[x][y] = "X";
-        this.setState(() => ({
-          board: board,
-        }));
       }
+
+      this.setState(() => ({
+        board: board,
+      }));
 
       p5.text(this.state.count % 2 === 0 ? "O" : "X", a, b);
 
@@ -132,6 +129,30 @@ export default class P5 extends Component {
     this.updateCount();
   };
 
+  restart = (p5) => {
+    for (var i = 0; i <= p5.width; i += this.state.w) {
+      for (var j = 0; j <= p5.height; j += this.state.h) {
+        //draw the grid line
+        p5.stroke(0);
+        p5.strokeWeight(1);
+        p5.line(i, 0, i, p5.height);
+        p5.line(0, j, p5.width, j);
+        //draw the X
+        p5.textSize(this.state.w);
+      }
+    }
+    p5.line(0, p5.height - 1, p5.width, p5.height - 1);
+    this.setState(() => ({
+      finish: false,
+      count: 0,
+      board: [
+        ["", "", ""],
+        ["", "", ""],
+        ["", "", ""],
+      ],
+    }));
+  };
+
   render() {
     return (
       <React.Fragment>
@@ -155,6 +176,7 @@ export default class P5 extends Component {
           {this.state.finish && this.state.count === 9 && <div>Tie!</div>}
           <br></br>
         </div>
+        <button onClick={() => window.location.reload(false)}> Restart </button>
       </React.Fragment>
     );
   }

@@ -66,26 +66,26 @@ export default class P5 extends Component {
     let y = Math.floor(p5.mouseY / this.state.h);
     if (this.state.board[x][y] === "") {
       p5.textSize(this.state.w);
+
+      //a and b are the coordinates of the drawn X or O
       let a;
       let b = y * this.state.h + this.state.h - this.state.h / 8;
+      let board = this.state.board;
 
       if (this.state.count % 2 === 0) {
         a = x * this.state.w + this.state.w / 8;
-        let board = this.state.board;
         board[x][y] = "O";
-        this.setState(() => ({
-          board: board,
-        }));
       } else {
         a = x * this.state.w + this.state.w / 6;
-        let board = this.state.board;
         board[x][y] = "X";
-        this.setState(() => ({
-          board: board,
-        }));
       }
+      this.setState(() => ({
+        board: board,
+      }));
 
       p5.text(this.state.count % 2 === 0 ? "O" : "X", a, b);
+      console.log("a is", a);
+      console.log("b is", b);
 
       this.addCount();
 
@@ -147,7 +147,7 @@ export default class P5 extends Component {
           mouseClicked={this.state.finish ? () => {} : this.mouseClicked}
         />
         <div>
-          {this.state.count === 0 && <div>dsadaClick to put your symbol!</div>}
+          {this.state.count === 0 && <div>Click to put your symbol!</div>}
           <div>
             This is {this.state.count % 2 === 0 && "O"}
             {this.state.count % 2 != 0 && "X"}'s turn{" "}
