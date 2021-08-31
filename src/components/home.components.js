@@ -1,7 +1,11 @@
 import React, { useState } from "react";
-
+import Player from "./p5.components";
 const home = (props) => {
-  return <div className="home-text">Welcome to Tictactoe</div>;
+  return (
+    <>
+      <Player></Player>
+    </>
+  );
 };
 
 export default home;

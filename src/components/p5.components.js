@@ -5,6 +5,7 @@ export default class P5 extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      anyWin: false,
       finish: false,
       count: 0,
       w: 0,
@@ -59,7 +60,7 @@ export default class P5 extends Component {
     if (p5.mouseX > 400 || p5.mouseY > 400 || p5.mouseX < 0 || p5.mouseY < 0) {
       return false;
     }
-
+    console.log("board is ", this.state.board);
     let x = Math.floor(p5.mouseX / this.state.w);
     console.log(p5.mouseX + " " + p5.mouseY);
     let y = Math.floor(p5.mouseY / this.state.h);
@@ -85,7 +86,10 @@ export default class P5 extends Component {
 
       this.addCount();
 
-      if (this.checkwin(this.state.board)) {
+      if (
+        this.checkwin(this.state.board) ||
+        this.checkAnywin(this.state.board)
+      ) {
         return <div>Won!</div>;
       }
     }
@@ -105,19 +109,22 @@ export default class P5 extends Component {
         (this.state.board[0][i] === "O" || this.state.board[0][i] === "X")
       ) {
         this.updateCount();
-      } else if (
-        this.state.board[0][0] === this.state.board[1][1] &&
-        this.state.board[1][1] === this.state.board[2][2] &&
-        (this.state.board[0][0] === "O" || this.state.board[0][0] === "X")
-      ) {
-        this.updateCount();
-      } else if (
-        this.state.board[0][2] === this.state.board[1][1] &&
-        this.state.board[1][1] === this.state.board[2][0] &&
-        (this.state.board[0][2] === "O" || this.state.board[0][2] === "X")
-      ) {
-        this.updateCount();
       }
+    }
+    if (
+      this.state.board[0][0] === this.state.board[1][1] &&
+      this.state.board[1][1] === this.state.board[2][2] &&
+      (this.state.board[0][0] === "O" || this.state.board[0][0] === "X")
+    ) {
+      this.updateCount();
+      console.log("00 11 22");
+    } else if (
+      this.state.board[0][2] === this.state.board[1][1] &&
+      this.state.board[1][1] === this.state.board[2][0] &&
+      (this.state.board[0][2] === "O" || this.state.board[0][2] === "X")
+    ) {
+      this.updateCount();
+      console.log("02 11 20");
     }
     for (var a = 0; a < 3; a++) {
       for (var b = 0; b < 3; b++) {
@@ -127,6 +134,51 @@ export default class P5 extends Component {
       }
     }
     this.updateCount();
+  };
+
+  checkAnywin = (board) => {
+    for (var i = 0; i < 3; i++) {
+      if (
+        this.state.board[i][0] === this.state.board[i][1] &&
+        this.state.board[i][1] === this.state.board[i][2] &&
+        (this.state.board[i][0] === "O" || this.state.board[i][0] === "X")
+      ) {
+        this.setState((state) => ({
+          anyWin: true,
+        }));
+        console.log("anyWin is ", this.state.anyWin);
+      } else if (
+        this.state.board[0][i] === this.state.board[1][i] &&
+        this.state.board[1][i] === this.state.board[2][i] &&
+        (this.state.board[0][i] === "O" || this.state.board[0][i] === "X")
+      ) {
+        this.setState(() => ({
+          anyWin: true,
+        }));
+        console.log("anyWin is ", this.state.anyWin);
+      }
+    }
+    if (
+      this.state.board[0][0] === this.state.board[1][1] &&
+      this.state.board[1][1] === this.state.board[2][2] &&
+      (this.state.board[0][0] === "O" || this.state.board[0][0] === "X")
+    ) {
+      this.setState(() => ({
+        anyWin: true,
+      }));
+      console.log(this.state.anyWin);
+      console.log("00 11 22");
+    } else if (
+      this.state.board[0][2] === this.state.board[1][1] &&
+      this.state.board[1][1] === this.state.board[2][0] &&
+      (this.state.board[0][2] === "O" || this.state.board[0][2] === "X")
+    ) {
+      this.setState(() => ({
+        anyWin: true,
+      }));
+      console.log("02 11 20");
+      console.log("anyWin is ", this.state.anyWin);
+    }
   };
 
   restart = (p5) => {
@@ -168,12 +220,16 @@ export default class P5 extends Component {
             {this.state.count % 2 != 0 && "X"}'s turn{" "}
           </div>
           The game is {this.state.finish ? " finished." : " going on"}
-          {this.state.finish && this.state.count !== 9 && (
+          {this.state.finish && this.state.anyWin && (
             <div>
               The game winner is {this.state.count % 2 === 0 ? "X" : "O"}{" "}
             </div>
           )}
-          {this.state.finish && this.state.count === 9 && <div>Tie!</div>}
+          {this.state.finish && this.state.count === 9 && !this.state.anyWin ? (
+            <div>Tie! {this.state.anyWin}</div>
+          ) : (
+            <></>
+          )}
           <br></br>
         </div>
         <button onClick={() => window.location.reload(false)}> Restart </button>

@@ -28,14 +28,14 @@ export default class Navbar extends Component {
             </Link>
           </a>
         </div>
-        <div className="AI nav-content collpase navbar-collapse text-light">
+        {/*<div className="AI nav-content collpase navbar-collapse text-light">
           <a href="/AI" class="text-light">
             <Link className="Nav__link" to="/AI">
               {" "}
               TicTacToe with AI
             </Link>
           </a>
-        </div>
+  </div>*/}
       </nav>
     );
   }

@@ -146,7 +146,8 @@ export default class P5 extends Component {
           draw={this.draw}
           mouseClicked={this.state.finish ? () => {} : this.mouseClicked}
         />
-        <div>
+        <div>Nothing here! To be implemented</div>
+        {/* <div>
           {this.state.count === 0 && <div>Click to put your symbol!</div>}
           <div>
             This is {this.state.count % 2 === 0 && "O"}
@@ -161,6 +162,7 @@ export default class P5 extends Component {
           {this.state.finish && this.state.count === 9 && <div>Tie!</div>}
           <br></br>
         </div>
+          */}
       </React.Fragment>
     );
   }
