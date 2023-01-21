@@ -1,3 +1,5 @@
+// This componenet is used for learning lifecycle of react.js
+
 import React, { Component } from "react";
 
 export default class Clock extends Component {
